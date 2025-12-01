@@ -327,8 +327,8 @@ def index_series(df):
         for col in ["Indicator", "Capital", "Role", "Code"]:
             g[col] = g[col].ffill().bfill()
 
-        # After merge, Observed may be NaN floats → force to boolean
-        g["Observed"] = g["Observed"].fillna(False).astype(bool)
+        # After merge, Observed may be NaN floats → force to nullable boolean then fill
+        g["Observed"] = g["Observed"].astype("boolean").fillna(False)
 
         # Interpolate values across missing years
         g["Value"] = g["Value"].interpolate(method="linear", limit_direction="both")
@@ -817,8 +817,9 @@ for i, cap in enumerate(cap_names):
             template="plotly_white",
         )
         fig_cap.update_layout(
-            showlegend=(i == 0),
+            showlegend=True,
             yaxis_title="Index (first valid year = 100)",
+            legend_title_text="Indicator",
         )
         fig_cap.update_yaxes(tickformat=".2f")
         st.plotly_chart(fig_cap, width="stretch")
