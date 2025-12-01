@@ -16,6 +16,14 @@ st.set_page_config(
 COUNTRY = "GBR"
 MIN_YEAR = 2000  # base year for analysis
 
+# ----------------- GLOBAL FORMATTER -----------------
+def fmt(x):
+    """Format numeric values to 2 decimal places with thousands separator."""
+    if isinstance(x, (int, float)):
+        return f"{x:,.2f}"
+    return x
+
+
 # Capital → indicator specs.
 # Each indicator has its OWN unit.
 CAPITALS = {
@@ -556,7 +564,7 @@ imputed values in the charts.
 
 ### **Units**
 - Wealth stocks shown in **trillions of constant US$** in KPI and absolute views  
-- Other indicators shown in their natural units (% GDP, years, index, etc.)  
+- Other indicators shown in their natural units (% GDP, years, index, etc.).  
 - Because units differ, use **Indexed mode** for comparisons and **Absolute mode** for magnitude.
 
 ---
@@ -641,7 +649,7 @@ for cap, ind_name in PRIMARY_MAP.items():
 
     kpi_primary.append((cap, ind_name, val, unit))
 
-# Fixed 5-column layout (or fewer if some missing)
+# Fixed layout
 kpi_cols = st.columns(max(1, len(kpi_primary)))
 for col, item in zip(kpi_cols, kpi_primary):
     cap, name, value, unit = item
@@ -654,7 +662,7 @@ for col, item in zip(kpi_cols, kpi_primary):
 
     col.metric(
         label=name,
-        value=f"{value:,.2f}",
+        value=fmt(value),
         help=help_text,
     )
 
@@ -668,8 +676,9 @@ with st.expander("See supporting indicators (secondary metrics)"):
     )
     support_latest = latest_all[~latest_all["Indicator"].isin(PRIMARY_MAP.values())][
         ["Indicator", "Capital", "Year", "Value"]
-    ]
-    st.dataframe(support_latest, use_container_width=True)
+    ].copy()
+    support_latest["Value"] = support_latest["Value"].apply(fmt)
+    st.dataframe(support_latest, width="stretch")
 
 # ----------------- WEALTH COMPOSITION (PIE + BAR) -----------------
 st.subheader("Wealth composition (latest year)")
@@ -698,7 +707,8 @@ if not comp.empty:
         names="Capital",
         title="Composition of manufactured, human and natural capital (trillions US$)",
     )
-    st.plotly_chart(fig_comp_pie, use_container_width=True)
+    fig_comp_pie.update_traces(texttemplate="%{percent:.2%}")
+    st.plotly_chart(fig_comp_pie, width="stretch")
 
     fig_comp_bar = px.bar(
         comp,
@@ -708,7 +718,8 @@ if not comp.empty:
         text_auto=".2f",
     )
     fig_comp_bar.update_layout(yaxis_title="Trillions of US$ (constant)")
-    st.plotly_chart(fig_comp_bar, use_container_width=True)
+    fig_comp_bar.update_yaxes(tickformat=".2f")
+    st.plotly_chart(fig_comp_bar, width="stretch")
 else:
     st.info("No Wealth Accounts capital-stock data available for composition overview.")
 
@@ -716,6 +727,7 @@ else:
 
 # For the chart we need units to scale absolute values correctly
 chart_df = view.merge(meta[["Indicator", "Unit"]], on="Indicator", how="left")
+
 
 def _scale_for_display(row):
     unit = row["Unit"] or ""
@@ -725,10 +737,11 @@ def _scale_for_display(row):
         return val / 1e12
     return val
 
+
 chart_df["Value_display"] = chart_df.apply(_scale_for_display, axis=1)
 
 if view_mode.startswith("Indexed"):
-    st.subheader("trajectories (normalised to 100)")
+    st.subheader("Relative trajectories (first valid year in window = 100)")
     y_col = "Index"
     y_title = "Index (first valid year in window = 100)"
 else:
@@ -751,7 +764,8 @@ fig.update_layout(
     legend_title_text="Indicator",
     yaxis_title=y_title,
 )
-st.plotly_chart(fig, use_container_width=True)
+fig.update_yaxes(tickformat=".2f")
+st.plotly_chart(fig, width="stretch")
 
 # Info specifically when Social capital is selected
 if "Social" in capitals_selected:
@@ -806,7 +820,8 @@ for i, cap in enumerate(cap_names):
             showlegend=(i == 0),
             yaxis_title="Index (first valid year = 100)",
         )
-        st.plotly_chart(fig_cap, use_container_width=True)
+        fig_cap.update_yaxes(tickformat=".2f")
+        st.plotly_chart(fig_cap, width="stretch")
 
 # ----------------- DECOUPLING PLOT: GDP PER CAPITA VS NATURAL CAPITAL -----------------
 st.subheader("Decoupling view: GDP per capita vs natural capital")
@@ -839,7 +854,8 @@ if not gdp_df.empty:
         fig_dec.update_layout(
             yaxis_title="Index (first available year = 100)",
         )
-        st.plotly_chart(fig_dec, use_container_width=True)
+        fig_dec.update_yaxes(tickformat=".2f")
+        st.plotly_chart(fig_dec, width="stretch")
         st.markdown(
             """
 This chart compares **GDP per capita** (real, constant prices) with **natural capital**
@@ -857,9 +873,13 @@ st.subheader("Trends & potential threats")
 
 trends = compute_trends(view)
 if not trends.empty:
+    # format numeric columns
+    for col in ["Abs_Change_%", "CAGR_%", "Index_Slope_per_year", "Max_Drawdown_%"]:
+        trends[col] = trends[col].apply(fmt)
+
     # sort with threats first
     trends = trends.sort_values(["Threat_Flag", "Index_Slope_per_year"], ascending=[False, True])
-    st.dataframe(trends, use_container_width=True)
+    st.dataframe(trends, width="stretch")
 
     threats = trends[trends["Threat_Flag"]]
     if not threats.empty:
@@ -912,7 +932,7 @@ These represent deterioration in the **productive base of well-being**.
 
 # ----------------- METADATA -----------------
 with st.expander("Indicator definitions and sources"):
-    st.dataframe(meta, use_container_width=True)
+    st.dataframe(meta, width="stretch")
 
 # ----------------- DOWNLOAD FILTERED DATA -----------------
 merged_for_download = view.merge(
