@@ -828,44 +828,82 @@ for i, cap in enumerate(cap_names):
 st.subheader("Decoupling view: GDP per capita vs natural capital")
 
 if not gdp_df.empty:
-    nat = data_idx[
+    # Natural capital index series
+    nat_raw = data_idx[
         (data_idx["Capital"] == "Natural")
         & (data_idx["Indicator"] == "Natural Capital (const US$)")
-    ][["Year", "Index"]].rename(columns={"Index": "Natural_Index"})
-    dec = pd.merge(gdp_df, nat, on="Year", how="inner")
-    dec = dec[(dec["Year"] >= yr_range[0]) & (dec["Year"] <= yr_range[1])]
+    ][["Year", "Index"]].rename(columns={"Index": "Natural_Index"}).copy()
 
-    if not dec.empty:
-        dec_melt = dec.melt(
-            id_vars="Year",
-            value_vars=["GDP_Index", "Natural_Index"],
-            var_name="Series",
-            value_name="Index",
+    # Ensure Year is integer on both sides
+    gdp_dec = gdp_df.copy()
+    gdp_dec["Year"] = gdp_dec["Year"].astype(int)
+    nat_raw["Year"] = nat_raw["Year"].astype(int)
+
+    # Work out overlapping years BEFORE applying the slider window
+    overlap_years = sorted(set(gdp_dec["Year"]) & set(nat_raw["Year"]))
+
+    if not overlap_years:
+        # Debug-style message that also helps you in the report
+        st.info(
+            f"No overlapping years between GDP per capita "
+            f"(available {gdp_dec['Year'].min()}–{gdp_dec['Year'].max()}) and "
+            f"natural capital (available {nat_raw['Year'].min()}–{nat_raw['Year'].max()})."
         )
-        dec_melt["Series"] = dec_melt["Series"].map(
-            {"GDP_Index": "GDP per capita (real)", "Natural_Index": "Natural capital stock"}
-        )
-        fig_dec = px.line(
-            dec_melt,
-            x="Year",
-            y="Index",
-            color="Series",
-            template="plotly_white",
-        )
-        fig_dec.update_layout(
-            yaxis_title="Index (first available year = 100)",
-        )
-        fig_dec.update_yaxes(tickformat=".2f")
-        st.plotly_chart(fig_dec, width="stretch")
-        st.markdown(
-            """
+    else:
+        # Now restrict both series to the selected window AND the overlap
+        year_min_sel, year_max_sel = yr_range
+        valid_years = [
+            y for y in overlap_years if year_min_sel <= y <= year_max_sel
+        ]
+
+        if not valid_years:
+            st.info(
+                "Not enough overlapping data to plot GDP per capita vs natural capital "
+                "for this **selected** year window. Try widening the range."
+            )
+        else:
+            gdp_window = gdp_dec[gdp_dec["Year"].isin(valid_years)]
+            nat_window = nat_raw[nat_raw["Year"].isin(valid_years)]
+
+            dec = pd.merge(gdp_window, nat_window, on="Year", how="inner")
+
+            if dec.empty:
+                st.info(
+                    "No overlapping data rows after merging GDP per capita and natural capital."
+                )
+            else:
+                dec_melt = dec.melt(
+                    id_vars="Year",
+                    value_vars=["GDP_Index", "Natural_Index"],
+                    var_name="Series",
+                    value_name="Index",
+                )
+                dec_melt["Series"] = dec_melt["Series"].map(
+                    {
+                        "GDP_Index": "GDP per capita (real)",
+                        "Natural_Index": "Natural capital stock",
+                    }
+                )
+
+                fig_dec = px.line(
+                    dec_melt,
+                    x="Year",
+                    y="Index",
+                    color="Series",
+                    template="plotly_white",
+                )
+                fig_dec.update_layout(
+                    yaxis_title="Index (first available year = 100)",
+                )
+                fig_dec.update_yaxes(tickformat=".2f")
+                st.plotly_chart(fig_dec, width="stretch")
+                st.markdown(
+                    """
 This chart compares **GDP per capita** (real, constant prices) with **natural capital**
 for the UK. Rising GDP per capita alongside flat or declining natural capital suggests
 that economic growth has not been fully decoupled from the use of environmental assets.
-            """
-        )
-    else:
-        st.info("Not enough overlapping data to plot GDP per capita vs natural capital for this window.")
+                    """
+                )
 else:
     st.info("GDP per capita data not available from the World Bank API.")
 
