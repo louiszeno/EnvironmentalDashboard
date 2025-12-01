@@ -1113,7 +1113,7 @@ if not trends.empty:
     ]
     trends = trends[columns_order]
 
-    st.dataframe(trends, width="stretch")
+    st.dataframe(trends, width="stretch", hide_index=True)
 
     threats = trends[trends["Threat flag"] == True]
     if not threats.empty:
