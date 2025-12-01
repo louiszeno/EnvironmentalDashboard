@@ -878,9 +878,25 @@ if not trends.empty:
     for col in ["Abs_Change_%", "CAGR_%", "Index_Slope_per_year", "Max_Drawdown_%"]:
         trends[col] = trends[col].apply(fmt)
 
-    # sort with threats first
-    trends = trends.sort_values(["Threat_Flag", "Index_Slope_per_year"], ascending=[False, True])
-    st.dataframe(trends, width="stretch")
+    # sort with threats first (use internal names)
+    trends = trends.sort_values(
+        ["Threat_Flag", "Index_Slope_per_year"],
+        ascending=[False, True]
+    )
+
+    # Create pretty column labels for display
+    pretty_cols = {
+        "Start": "Start year",
+        "End": "End year",
+        "Abs_Change_%": "Absolute change (%)",
+        "CAGR_%": "CAGR (%)",
+        "Index_Slope_per_year": "Index slope (per year)",
+        "Max_Drawdown_%": "Max drawdown (%)",
+        "Threat_Flag": "Threat flag",
+    }
+    trends_display = trends.rename(columns=pretty_cols)
+
+    st.dataframe(trends_display, width="stretch")
 
     threats = trends[trends["Threat_Flag"]]
     if not threats.empty:
@@ -890,6 +906,7 @@ if not trends.empty:
         )
 else:
     st.info("Not enough data in the selected window to compute trends.")
+
 
 # ----------------- HOW TO READ -----------------
 st.markdown(
