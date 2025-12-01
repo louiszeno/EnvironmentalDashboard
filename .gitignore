@@ -1,0 +1,19 @@
+# Python / virtualenv
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+.venv/
+env/
+venv/
+
+# Streamlit
+.streamlit/
+
+# macOS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+*.log
