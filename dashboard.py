@@ -28,9 +28,7 @@ This version is intentionally explicit and commented for assessment readability.
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import requests
 import time
-from datetime import datetime
 from pathlib import Path
 
 # ----------------- PAGE CONFIG -----------------
@@ -44,7 +42,7 @@ st.set_page_config(
 COUNTRY = "GBR"          # ISO3 code for the United Kingdom
 MIN_YEAR = 2000          # Base year for analysis and indexing
 PLOTLY_TEMPLATE = "plotly_dark"  # Keep chart styling aligned with dark theme
-LOG_LOAD = True          # Print fetch timing to console for diagnostics
+LOG_LOAD = True          # Print load timing to console for diagnostics
 PREBAKED_PATH = Path("data/prebaked_worldbank.csv")
 
 
@@ -167,85 +165,14 @@ VA_INDICATOR_NAME = CAPITALS["Social"]["primary"]["name"]
 
 
 # =============================================================================
-# 4. API HELPERS TO LOAD DATA
+# 4. DATA LOADING (PREBAKED ONLY)
 # =============================================================================
-
-def wb_get_series(country: str, indicator: str, start: int, end: int,
-                  retries: int = 3, pause: float = 0.8) -> pd.DataFrame:
-    """
-    Fetch a single World Bank indicator for a given country and date range.
-
-    Parameters
-    ----------
-    country : str
-        ISO3 country code.
-    indicator : str
-        World Bank indicator code.
-    start : int
-        Start year.
-    end : int
-        End year.
-    retries : int
-        Number of retries if API call fails.
-    pause : float
-        Delay between retries.
-
-    Returns
-    -------
-    DataFrame with columns ['Year', 'Value'] or empty DataFrame if no data.
-    """
-    url = (
-        f"https://api.worldbank.org/v2/country/{country}/indicator/"
-        f"{indicator}?date={start}:{end}&format=json&per_page=2000"
-    )
-
-    for attempt in range(retries):
-        try:
-            t_req = time.perf_counter()
-            r = requests.get(url, timeout=15)
-            if LOG_LOAD:
-                print(
-                    f"[wb_get_series] {indicator} attempt {attempt+1}/{retries} "
-                    f"status={r.status_code} in {time.perf_counter()-t_req:.2f}s"
-                )
-            js = r.json()
-        except Exception as exc:
-            if LOG_LOAD:
-                print(
-                    f"[wb_get_series] {indicator} attempt {attempt+1}/{retries} "
-                    f"failed: {exc}"
-                )
-            time.sleep(pause * (attempt + 1))
-            continue
-
-        if isinstance(js, list) and len(js) > 1 and isinstance(js[1], list):
-            rows = []
-            for d in js[1]:
-                if d.get("value") is not None:
-                    rows.append(
-                        {"Year": int(d["date"]), "Value": float(d["value"])}
-                    )
-            return pd.DataFrame(rows)
-        else:
-            if LOG_LOAD:
-                print(
-                    f"[wb_get_series] {indicator} unexpected payload type: "
-                    f"{type(js).__name__}"
-                )
-
-        time.sleep(pause * (attempt + 1))
-
-    return pd.DataFrame(columns=["Year", "Value"])
-
 
 @st.cache_data(show_spinner=True)
 def load_all_data():
     """
-    Load and assemble all indicator series used in the dashboard.
-
-    - Wealth Accounts & WDI via World Bank API
-    - Voice & Accountability via local CSV
-    - Net Capital Stock via ONS API
+    Load indicator series from a prebaked CSV (no live API calls) and the local
+    Voice & Accountability CSV.
 
     Returns
     -------
@@ -254,117 +181,70 @@ def load_all_data():
     meta : DataFrame
         Indicator metadata (Indicator, Capital, Code, Unit, Source)
     """
-    start = MIN_YEAR
-    end = datetime.now().year
-
-    frames = []
-    meta_rows = []
     t0_all = time.perf_counter()
 
-    # Prefer a pre-fetched CSV if available to avoid slow API calls.
-    if PREBAKED_PATH.exists():
-        try:
-            df_pre = pd.read_csv(PREBAKED_PATH)
-            required_cols = {
-                "Year",
-                "Value",
-                "Capital",
-                "Role",
-                "Indicator",
-                "Code",
-            }
-            if required_cols.issubset(df_pre.columns):
-                df_pre = df_pre[df_pre["Indicator"] != VA_INDICATOR_NAME]
-                frames.append(df_pre)
-                if LOG_LOAD:
-                    print(
-                        f"[load_all_data] loaded prebaked CSV "
-                        f"with {len(df_pre)} rows in "
-                        f"{time.perf_counter() - t0_all:.2f}s"
-                    )
-                for _, row in (
-                    df_pre[["Indicator", "Capital", "Code"]]
-                    .drop_duplicates()
-                    .iterrows()
-                ):
-                    unit = ""
-                    source = ""
-                    for cap, spec in CAPITALS.items():
-                        for role in ["primary", "support", "support2"]:
-                            if role not in spec:
-                                continue
-                            ind = spec[role]
-                            if (
-                                ind["name"] == row["Indicator"]
-                                or ind["code"] == row["Code"]
-                            ):
-                                unit = ind["unit"]
-                                source = ind["source"]
-                                break
-                        if unit or source:
-                            break
-                    meta_rows.append(
-                        {
-                            "Indicator": row["Indicator"],
-                            "Capital": row["Capital"],
-                            "Code": row["Code"],
-                            "Unit": unit,
-                            "Source": source,
-                        }
-                    )
-            else:
-                if LOG_LOAD:
-                    print(
-                        "[load_all_data] prebaked CSV missing required columns; "
-                        "falling back to API"
-                    )
-        except Exception as exc:
-            if LOG_LOAD:
-                print(f"[load_all_data] failed to read prebaked CSV: {exc}")
+    if not PREBAKED_PATH.exists():
+        st.error(
+            "Prebaked data not found. Place data/prebaked_worldbank.csv in the "
+            "repository (columns: Year, Value, Capital, Role, Indicator, Code)."
+        )
+        return pd.DataFrame(), pd.DataFrame()
 
-    use_api = not frames
+    try:
+        data_raw = pd.read_csv(PREBAKED_PATH)
+    except Exception as exc:
+        st.error(f"Failed to read prebaked data: {exc}")
+        return pd.DataFrame(), pd.DataFrame()
 
-    # A. World Bank indicators (except Voice & Accountability)
-    if use_api:
+    required_cols = {
+        "Year",
+        "Value",
+        "Capital",
+        "Role",
+        "Indicator",
+        "Code",
+    }
+    if not required_cols.issubset(data_raw.columns):
+        st.error(
+            "Prebaked CSV missing required columns. Expected: "
+            "Year, Value, Capital, Role, Indicator, Code."
+        )
+        return pd.DataFrame(), pd.DataFrame()
+
+    # Avoid duplicating VA rows that come from the local CSV
+    data_raw = data_raw[data_raw["Indicator"] != VA_INDICATOR_NAME].copy()
+
+    # Build metadata using CAPITALS definitions where possible
+    meta_rows = []
+    for _, row in (
+        data_raw[["Indicator", "Capital", "Code"]]
+        .drop_duplicates()
+        .iterrows()
+    ):
+        unit = ""
+        source = ""
         for cap, spec in CAPITALS.items():
             for role in ["primary", "support", "support2"]:
                 if role not in spec:
                     continue
-
                 ind = spec[role]
+                if ind["name"] == row["Indicator"] or ind["code"] == row["Code"]:
+                    unit = ind["unit"]
+                    source = ind["source"]
+                    break
+            if unit or source:
+                break
+        meta_rows.append(
+            {
+                "Indicator": row["Indicator"],
+                "Capital": row["Capital"],
+                "Code": row["Code"],
+                "Unit": unit,
+                "Source": source,
+            }
+        )
 
-                # Exclude VA here; it is loaded from CSV below
-                if cap == "Social" and ind["code"] == "VA.EST":
-                    continue
-
-                t0 = time.perf_counter()
-                df = wb_get_series(COUNTRY, ind["code"], start, end)
-                if LOG_LOAD:
-                    print(
-                        f"[load_all_data] {ind['code']} ({ind['name']}) "
-                        f"fetched {len(df)} rows in {time.perf_counter() - t0:.2f}s"
-                    )
-                if df.empty:
-                    continue
-
-                df["Capital"] = cap
-                df["Role"] = role
-                df["Indicator"] = ind["name"]
-                df["Code"] = ind["code"]
-
-                frames.append(df)
-
-                meta_rows.append(
-                    {
-                        "Indicator": ind["name"],
-                        "Capital": cap,
-                        "Code": ind["code"],
-                        "Unit": ind["unit"],
-                        "Source": ind["source"],
-                    }
-                )
-
-    # B. Voice & Accountability (Social capital primary) from CSV
+    # Voice & Accountability (Social capital primary) from CSV
     try:
         t0_va = time.perf_counter()
         va = pd.read_csv("voice_accountability_uk.csv")
@@ -391,8 +271,8 @@ def load_all_data():
     va["Role"] = "primary"
     va["Indicator"] = VA_INDICATOR_NAME
     va["Code"] = CAPITALS["Social"]["primary"]["code"]
-    frames.append(va)
 
+    data_raw = pd.concat([data_raw, va], ignore_index=True)
     meta_rows.append(
         {
             "Indicator": VA_INDICATOR_NAME,
@@ -403,58 +283,12 @@ def load_all_data():
         }
     )
 
-    # C. ONS Net Capital Stock for manufactured capital
-    try:
-        ons_url = "https://api.ons.gov.uk/timeseries/MJU5/dataset/CAPSTK/data"
-        t0_ons = time.perf_counter()
-        resp = requests.get(
-            ons_url,
-            headers={"User-Agent": "UK-Inclusive-Wealth-Dashboard"},
-            timeout=15,
-        )
-        data = resp.json()
-        years = []
-        values = []
-        for entry in data["years"]:
-            y = int(entry["year"])
-            if y >= start:
-                years.append(y)
-                values.append(float(entry["value"]))
-        df_ons = pd.DataFrame({"Year": years, "Value": values})
-        df_ons["Capital"] = "Manufactured"
-        df_ons["Role"] = "support_ons"
-        df_ons["Indicator"] = "Net Capital Stock (ONS – £m)"
-        df_ons["Code"] = "ONS:MJU5"
-        frames.append(df_ons)
-
-        meta_rows.append(
-            {
-                "Indicator": "Net Capital Stock (ONS – £m)",
-                "Capital": "Manufactured",
-                "Code": "ONS:MJU5",
-                "Unit": "£ million",
-                "Source": "ONS Capital Stock dataset (series MJU5)",
-            }
-        )
-        if LOG_LOAD:
-            print(
-                "[load_all_data] ONS MJU5 fetched "
-                f"{len(df_ons)} rows in {time.perf_counter() - t0_ons:.2f}s"
-            )
-    except Exception:
-        # This failure is non-fatal; we can still run without the ONS series.
-        pass
-
-    if not frames:
-        return pd.DataFrame(), pd.DataFrame()
-
-    data_raw = pd.concat(frames, ignore_index=True)
     meta = pd.DataFrame(meta_rows).drop_duplicates()
 
     if LOG_LOAD:
         print(
-            f"[load_all_data] completed with {len(data_raw)} rows "
-            f"in {time.perf_counter() - t0_all:.2f}s"
+            f"[load_all_data] loaded prebaked data with {len(data_raw)} rows in "
+            f"{time.perf_counter() - t0_all:.2f}s"
         )
 
     return data_raw, meta
@@ -467,34 +301,30 @@ def load_gdp_per_capita():
 
     This is indexed to 100 at the first available year.
     """
-    # Prefer prebaked GDP if present in the same CSV to avoid API calls.
-    if PREBAKED_PATH.exists():
-        try:
-            df_pre = pd.read_csv(PREBAKED_PATH)
-            df_gdp = df_pre[df_pre["Code"] == "NY.GDP.PCAP.KD"][
-                ["Year", "Value"]
-            ].copy()
-            if not df_gdp.empty:
-                df_gdp = df_gdp.sort_values("Year")
-                base = df_gdp["Value"].iloc[0]
-                df_gdp["GDP_Index"] = (df_gdp["Value"] / base) * 100
-                if LOG_LOAD:
-                    print(
-                        f\"[load_gdp_per_capita] used prebaked GDP with {len(df_gdp)} rows\"
-                    )
-                return df_gdp
-        except Exception as exc:
-            if LOG_LOAD:
-                print(f\"[load_gdp_per_capita] failed to read prebaked GDP: {exc}\")
-
-    df = wb_get_series(COUNTRY, "NY.GDP.PCAP.KD", MIN_YEAR, datetime.now().year)
-    if df.empty:
+    if not PREBAKED_PATH.exists():
+        if LOG_LOAD:
+            print("[load_gdp_per_capita] prebaked file missing; GDP unavailable")
         return pd.DataFrame()
 
-    df = df.sort_values("Year")
-    base = df["Value"].iloc[0]
-    df["GDP_Index"] = (df["Value"] / base) * 100
-    return df
+    try:
+        df_pre = pd.read_csv(PREBAKED_PATH)
+        df_gdp = df_pre[df_pre["Code"] == "NY.GDP.PCAP.KD"][["Year", "Value"]].copy()
+    except Exception as exc:
+        if LOG_LOAD:
+            print(f"[load_gdp_per_capita] failed to read prebaked GDP: {exc}")
+        return pd.DataFrame()
+
+    if df_gdp.empty:
+        if LOG_LOAD:
+            print("[load_gdp_per_capita] no GDP rows in prebaked file")
+        return pd.DataFrame()
+
+    df_gdp = df_gdp.sort_values("Year")
+    base = df_gdp["Value"].iloc[0]
+    df_gdp["GDP_Index"] = (df_gdp["Value"] / base) * 100
+    if LOG_LOAD:
+        print(f"[load_gdp_per_capita] used prebaked GDP with {len(df_gdp)} rows")
+    return df_gdp
 
 
 # =============================================================================
