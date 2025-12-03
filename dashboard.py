@@ -30,7 +30,8 @@ import pandas as pd
 import plotly.express as px
 import requests
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
+from pathlib import Path
 
 # ----------------- PAGE CONFIG -----------------
 st.set_page_config(
@@ -43,6 +44,9 @@ st.set_page_config(
 COUNTRY = "GBR"          # ISO3 code for the United Kingdom
 MIN_YEAR = 2000          # Base year for analysis and indexing
 PLOTLY_TEMPLATE = "plotly_dark"  # Keep chart styling aligned with dark theme
+CACHE_DIR = Path(".cache")
+DATA_CACHE_PATH = CACHE_DIR / "indicator_cache.pkl"
+CACHE_MAX_AGE = timedelta(days=1)
 
 
 # =============================================================================
@@ -234,6 +238,22 @@ def load_all_data():
     meta : DataFrame
         Indicator metadata (Indicator, Capital, Code, Unit, Source)
     """
+    # Use a lightweight disk cache to avoid re-hitting APIs more than once per day.
+    # Shared across users on the same server process.
+    if DATA_CACHE_PATH.exists():
+        age = datetime.now() - datetime.fromtimestamp(DATA_CACHE_PATH.stat().st_mtime)
+        if age <= CACHE_MAX_AGE:
+            try:
+                cached = pd.read_pickle(DATA_CACHE_PATH)
+                if (
+                    isinstance(cached, dict)
+                    and "data_raw" in cached
+                    and "meta" in cached
+                ):
+                    return cached["data_raw"], cached["meta"]
+            except Exception:
+                pass
+
     start = MIN_YEAR
     end = datetime.now().year
 
@@ -348,6 +368,13 @@ def load_all_data():
     data_raw = pd.concat(frames, ignore_index=True)
     meta = pd.DataFrame(meta_rows).drop_duplicates()
 
+    try:
+        CACHE_DIR.mkdir(exist_ok=True)
+        pd.to_pickle({"data_raw": data_raw, "meta": meta}, DATA_CACHE_PATH)
+    except Exception:
+        # Cache failures should not break the app.
+        pass
+
     return data_raw, meta
 
 
@@ -416,7 +443,9 @@ def index_series(df: pd.DataFrame) -> pd.DataFrame:
             g[col] = g[col].ffill().bfill()
 
         # Ensure Observed is plain bool with no NA
-        g["Observed"] = g["Observed"].fillna(False).astype(bool)
+        g["Observed"] = (
+            g["Observed"].astype("boolean").fillna(False).astype(bool)
+        )
 
         # Interpolate values
         g["Value"] = g["Value"].interpolate(method="linear", limit_direction="both")
@@ -900,7 +929,9 @@ chart_df["Value_display"] = chart_df.apply(_scale_for_display, axis=1)
 
 # Ensure Imputed is clean bool (defensive, though index_series already did this)
 if "Imputed" in chart_df.columns:
-    chart_df["Imputed"] = chart_df["Imputed"].fillna(False).astype(bool)
+    chart_df["Imputed"] = (
+        chart_df["Imputed"].astype("boolean").fillna(False).astype(bool)
+    )
 
 if view_mode.startswith("Indexed"):
     y_col = "Index"
