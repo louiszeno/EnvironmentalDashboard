@@ -169,7 +169,7 @@ VA_INDICATOR_NAME = CAPITALS["Social"]["primary"]["name"]
 # =============================================================================
 
 @st.cache_data(show_spinner=True)
-def load_all_data():
+def load_all_data(_cache_buster=None):
     """
     Load indicator series from a prebaked CSV (no live API calls) and the local
     Voice & Accountability CSV.
@@ -295,7 +295,7 @@ def load_all_data():
 
 
 @st.cache_data(show_spinner=True)
-def load_gdp_per_capita():
+def load_gdp_per_capita(_cache_buster=None):
     """
     Load GDP per capita (constant prices) for decoupling analysis.
 
@@ -453,8 +453,9 @@ def compute_trends(df_window: pd.DataFrame) -> pd.DataFrame:
 # 6. LOAD DATA AND PREPARE MASTER DATAFRAMES
 # =============================================================================
 
-data_raw, meta = load_all_data()
-gdp_df = load_gdp_per_capita()
+_prebake_mtime = PREBAKED_PATH.stat().st_mtime if PREBAKED_PATH.exists() else None
+data_raw, meta = load_all_data(_prebake_mtime)
+gdp_df = load_gdp_per_capita(_prebake_mtime)
 
 if data_raw.empty:
     st.error("No data available. Please check the data sources and reload.")
