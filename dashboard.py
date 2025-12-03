@@ -31,6 +31,7 @@ import plotly.express as px
 import requests
 import time
 from datetime import datetime
+from pathlib import Path
 
 # ----------------- PAGE CONFIG -----------------
 st.set_page_config(
@@ -44,6 +45,7 @@ COUNTRY = "GBR"          # ISO3 code for the United Kingdom
 MIN_YEAR = 2000          # Base year for analysis and indexing
 PLOTLY_TEMPLATE = "plotly_dark"  # Keep chart styling aligned with dark theme
 LOG_LOAD = True          # Print fetch timing to console for diagnostics
+PREBAKED_PATH = Path("data/prebaked_worldbank.csv")
 
 
 # =============================================================================
@@ -259,44 +261,108 @@ def load_all_data():
     meta_rows = []
     t0_all = time.perf_counter()
 
-    # A. World Bank indicators (except Voice & Accountability)
-    for cap, spec in CAPITALS.items():
-        for role in ["primary", "support", "support2"]:
-            if role not in spec:
-                continue
-
-            ind = spec[role]
-
-            # Exclude VA here; it is loaded from CSV below
-            if cap == "Social" and ind["code"] == "VA.EST":
-                continue
-
-            t0 = time.perf_counter()
-            df = wb_get_series(COUNTRY, ind["code"], start, end)
+    # Prefer a pre-fetched CSV if available to avoid slow API calls.
+    if PREBAKED_PATH.exists():
+        try:
+            df_pre = pd.read_csv(PREBAKED_PATH)
+            required_cols = {
+                "Year",
+                "Value",
+                "Capital",
+                "Role",
+                "Indicator",
+                "Code",
+            }
+            if required_cols.issubset(df_pre.columns):
+                df_pre = df_pre[df_pre["Indicator"] != VA_INDICATOR_NAME]
+                frames.append(df_pre)
+                if LOG_LOAD:
+                    print(
+                        f"[load_all_data] loaded prebaked CSV "
+                        f"with {len(df_pre)} rows in "
+                        f"{time.perf_counter() - t0_all:.2f}s"
+                    )
+                for _, row in (
+                    df_pre[["Indicator", "Capital", "Code"]]
+                    .drop_duplicates()
+                    .iterrows()
+                ):
+                    unit = ""
+                    source = ""
+                    for cap, spec in CAPITALS.items():
+                        for role in ["primary", "support", "support2"]:
+                            if role not in spec:
+                                continue
+                            ind = spec[role]
+                            if (
+                                ind["name"] == row["Indicator"]
+                                or ind["code"] == row["Code"]
+                            ):
+                                unit = ind["unit"]
+                                source = ind["source"]
+                                break
+                        if unit or source:
+                            break
+                    meta_rows.append(
+                        {
+                            "Indicator": row["Indicator"],
+                            "Capital": row["Capital"],
+                            "Code": row["Code"],
+                            "Unit": unit,
+                            "Source": source,
+                        }
+                    )
+            else:
+                if LOG_LOAD:
+                    print(
+                        "[load_all_data] prebaked CSV missing required columns; "
+                        "falling back to API"
+                    )
+        except Exception as exc:
             if LOG_LOAD:
-                print(
-                    f"[load_all_data] {ind['code']} ({ind['name']}) "
-                    f"fetched {len(df)} rows in {time.perf_counter() - t0:.2f}s"
+                print(f"[load_all_data] failed to read prebaked CSV: {exc}")
+
+    use_api = not frames
+
+    # A. World Bank indicators (except Voice & Accountability)
+    if use_api:
+        for cap, spec in CAPITALS.items():
+            for role in ["primary", "support", "support2"]:
+                if role not in spec:
+                    continue
+
+                ind = spec[role]
+
+                # Exclude VA here; it is loaded from CSV below
+                if cap == "Social" and ind["code"] == "VA.EST":
+                    continue
+
+                t0 = time.perf_counter()
+                df = wb_get_series(COUNTRY, ind["code"], start, end)
+                if LOG_LOAD:
+                    print(
+                        f"[load_all_data] {ind['code']} ({ind['name']}) "
+                        f"fetched {len(df)} rows in {time.perf_counter() - t0:.2f}s"
+                    )
+                if df.empty:
+                    continue
+
+                df["Capital"] = cap
+                df["Role"] = role
+                df["Indicator"] = ind["name"]
+                df["Code"] = ind["code"]
+
+                frames.append(df)
+
+                meta_rows.append(
+                    {
+                        "Indicator": ind["name"],
+                        "Capital": cap,
+                        "Code": ind["code"],
+                        "Unit": ind["unit"],
+                        "Source": ind["source"],
+                    }
                 )
-            if df.empty:
-                continue
-
-            df["Capital"] = cap
-            df["Role"] = role
-            df["Indicator"] = ind["name"]
-            df["Code"] = ind["code"]
-
-            frames.append(df)
-
-            meta_rows.append(
-                {
-                    "Indicator": ind["name"],
-                    "Capital": cap,
-                    "Code": ind["code"],
-                    "Unit": ind["unit"],
-                    "Source": ind["source"],
-                }
-            )
 
     # B. Voice & Accountability (Social capital primary) from CSV
     try:

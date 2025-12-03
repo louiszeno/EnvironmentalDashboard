@@ -1,0 +1,231 @@
+Year,Value,Observed,Indicator,Capital,Role,Code,Index,Imputed,Unit,Source
+2000,4.01821994781494,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,100.0,False,% of GDP,World Bank – WDI
+2001,4.10014009475708,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,102.03871734265537,False,% of GDP,World Bank – WDI
+2002,4.61192989349365,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,114.77544667512693,False,% of GDP,World Bank – WDI
+2003,4.8012900352478,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,119.48798466989554,False,% of GDP,World Bank – WDI
+2004,4.73554992675781,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,117.8519341464358,False,% of GDP,World Bank – WDI
+2005,4.92976999282837,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,122.68541933621928,False,% of GDP,World Bank – WDI
+2006,4.97649002075195,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,123.8481239300528,False,% of GDP,World Bank – WDI
+2007,4.9244499206543,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,122.55302060635475,False,% of GDP,World Bank – WDI
+2008,4.90973997116089,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,122.18693936430105,False,% of GDP,World Bank – WDI
+2009,5.06263017654419,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,125.9918631208127,False,% of GDP,World Bank – WDI
+2010,5.69867992401123,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,141.82100527150348,False,% of GDP,World Bank – WDI
+2011,5.57218980789185,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,138.67309107660822,False,% of GDP,World Bank – WDI
+2012,5.548744916915895,False,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,138.08962647585375,True,% of GDP,World Bank – WDI
+2013,5.52530002593994,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,137.50616187509925,False,% of GDP,World Bank – WDI
+2014,5.60134983062744,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,139.39878611357219,False,% of GDP,World Bank – WDI
+2015,5.55452013015747,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,138.2333521383754,False,% of GDP,World Bank – WDI
+2016,5.42795991897583,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,135.0836935127827,False,% of GDP,World Bank – WDI
+2017,5.45256996154785,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,135.69615482380183,False,% of GDP,World Bank – WDI
+2018,5.20437002182007,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,129.51929186081875,False,% of GDP,World Bank – WDI
+2019,5.26115989685059,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,130.93260113129315,False,% of GDP,World Bank – WDI
+2020,5.43935012817383,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,135.36715756766085,False,% of GDP,World Bank – WDI
+2021,5.90682983398438,True,Education expenditure (% of GDP),Human,support2,SE.XPD.TOTL.GD.ZS,147.00115749503567,False,% of GDP,World Bank – WDI
+2000,12.2101434299177,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,100.0,False,% of land area,World Bank – WDI
+2001,12.2535444136734,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,100.35545023696737,False,% of land area,World Bank – WDI
+2002,12.296945397429,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,100.71090047393396,False,% of land area,World Bank – WDI
+2003,12.3403463811846,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,101.06635071090051,False,% of land area,World Bank – WDI
+2004,12.3837473649403,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,101.42180094786791,False,% of land area,World Bank – WDI
+2005,12.4271483486959,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,101.77725118483447,False,% of land area,World Bank – WDI
+2006,12.4705493324515,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,102.13270142180102,False,% of land area,World Bank – WDI
+2007,12.5139503162072,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,102.48815165876842,False,% of land area,World Bank – WDI
+2008,12.5573512999628,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,102.84360189573498,False,% of land area,World Bank – WDI
+2009,12.6007522837184,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,103.19905213270155,False,% of land area,World Bank – WDI
+2010,12.6441532674741,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,103.55450236966894,False,% of land area,World Bank – WDI
+2011,12.7235150663415,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,104.20446851726508,False,% of land area,World Bank – WDI
+2012,12.8028768652089,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,104.85443466486122,False,% of land area,World Bank – WDI
+2013,12.8822386640764,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,105.5044008124582,False,% of land area,World Bank – WDI
+2014,12.9616004629438,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,106.15436696005433,False,% of land area,World Bank – WDI
+2015,13.0409622618113,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,106.80433310765129,False,% of land area,World Bank – WDI
+2016,13.0574959699087,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,106.93974272173404,False,% of land area,World Bank – WDI
+2017,13.0781631050304,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,107.10900473933704,False,% of land area,World Bank – WDI
+2018,13.1153639482495,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,107.41367637102279,False,% of land area,World Bank – WDI
+2019,13.1525647914686,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,107.71834800270854,False,% of land area,World Bank – WDI
+2020,13.1856322076634,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,107.98916723087399,False,% of land area,World Bank – WDI
+2021,13.2214553796553,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,108.28255585646642,False,% of land area,World Bank – WDI
+2022,13.2554871243748,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,108.56127285037263,False,% of land area,World Bank – WDI
+2023,13.2907130161617,True,Forest area (% of land area),Natural,support,AG.LND.FRST.ZS,108.84976980365646,False,% of land area,World Bank – WDI
+2000,1.76882231235504,True,Government Effectiveness (estimate),Social,support,GE.EST,100.0,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2001,1.77427393198013,False,Government Effectiveness (estimate),Social,support,GE.EST,100.30820617690148,True,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2002,1.77972555160522,True,Government Effectiveness (estimate),Social,support,GE.EST,100.61641235380299,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2003,1.74633467197418,True,Government Effectiveness (estimate),Social,support,GE.EST,98.72866594774466,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2004,1.86802077293396,True,Government Effectiveness (estimate),Social,support,GE.EST,105.60816425064456,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2005,1.76157212257385,True,Government Effectiveness (estimate),Social,support,GE.EST,99.5901120349654,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2006,1.6667982339859,True,Government Effectiveness (estimate),Social,support,GE.EST,94.23209003773232,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2007,1.64163875579834,True,Government Effectiveness (estimate),Social,support,GE.EST,92.80970419310431,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2008,1.63480663299561,True,Government Effectiveness (estimate),Social,support,GE.EST,92.42345155738117,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2009,1.50809645652771,True,Government Effectiveness (estimate),Social,support,GE.EST,85.25991819493755,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2010,1.6179975271225,True,Government Effectiveness (estimate),Social,support,GE.EST,91.47315226752599,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2011,1.60419464111328,True,Government Effectiveness (estimate),Social,support,GE.EST,90.69280898980905,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2012,1.59121036529541,True,Government Effectiveness (estimate),Social,support,GE.EST,89.9587456682885,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2013,1.51226651668549,True,Government Effectiveness (estimate),Social,support,GE.EST,85.49567167501596,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2014,1.62349116802216,True,Government Effectiveness (estimate),Social,support,GE.EST,91.78373410840891,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2015,1.70522773265839,True,Government Effectiveness (estimate),Social,support,GE.EST,96.40469371895367,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2016,1.57377743721008,True,Government Effectiveness (estimate),Social,support,GE.EST,88.9731787199544,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2017,1.4309287071228,True,Government Effectiveness (estimate),Social,support,GE.EST,80.89725559927143,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2018,1.36169874668121,True,Government Effectiveness (estimate),Social,support,GE.EST,76.98335424479248,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2019,1.44982588291168,True,Government Effectiveness (estimate),Social,support,GE.EST,81.96560348570893,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2020,1.33215415477753,True,Government Effectiveness (estimate),Social,support,GE.EST,75.31305691208053,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2021,1.23967301845551,True,Government Effectiveness (estimate),Social,support,GE.EST,70.08465518534693,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2022,1.23809003829956,True,Government Effectiveness (estimate),Social,support,GE.EST,69.99516173284506,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2023,1.16114270687103,True,Government Effectiveness (estimate),Social,support,GE.EST,65.64496042143799,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2000,17.8093703213803,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,100.0,False,% of GDP,World Bank – WDI
+2001,17.742848791809,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,99.62648017099492,False,% of GDP,World Bank – WDI
+2002,17.7182381976752,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,99.48829115201396,False,% of GDP,World Bank – WDI
+2003,17.5107721797234,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,98.3233649687298,False,% of GDP,World Bank – WDI
+2004,17.4777357657468,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,98.13786478887819,False,% of GDP,World Bank – WDI
+2005,17.5910760257916,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,98.77427280330829,False,% of GDP,World Bank – WDI
+2006,17.8282761722184,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,100.10615676184464,False,% of GDP,World Bank – WDI
+2007,18.1470468466054,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,101.89606100121192,False,% of GDP,World Bank – WDI
+2008,17.6488453815261,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,99.09864898669952,False,% of GDP,World Bank – WDI
+2009,16.1458985719285,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,90.6595701058853,False,% of GDP,World Bank – WDI
+2010,16.0572887557948,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,90.16202406953091,False,% of GDP,World Bank – WDI
+2011,15.7116306485664,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,88.22114631253669,False,% of GDP,World Bank – WDI
+2012,15.7563538861479,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,88.47226825999718,False,% of GDP,World Bank – WDI
+2013,15.967790919415,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,89.65949178026543,False,% of GDP,World Bank – WDI
+2014,16.5723318052911,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,93.05400194523371,False,% of GDP,World Bank – WDI
+2015,17.3744593522088,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,97.55796549050706,False,% of GDP,World Bank – WDI
+2016,17.9048977101843,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,100.53638835669176,False,% of GDP,World Bank – WDI
+2017,18.2480328761545,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,102.4630997438892,False,% of GDP,World Bank – WDI
+2018,17.9957849820471,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,101.04672235628121,False,% of GDP,World Bank – WDI
+2019,18.193257505525,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,102.15553485169457,False,% of GDP,World Bank – WDI
+2020,17.5110744735168,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,98.32506235492563,False,% of GDP,World Bank – WDI
+2021,17.718648814212,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,99.49059677275963,False,% of GDP,World Bank – WDI
+2022,17.8548923618643,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,100.25560724305538,False,% of GDP,World Bank – WDI
+2023,17.6321055184357,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,99.00465429296065,False,% of GDP,World Bank – WDI
+2024,17.4025925740155,True,Gross fixed capital formation (% of GDP),Manufactured,support,NE.GDI.FTOT.ZS,97.7159341401506,False,% of GDP,World Bank – WDI
+2000,15543506960110.7,True,Human Capital (const US$),Human,primary,NW.HCA.TO,100.0,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2001,15772591877380.1,True,Human Capital (const US$),Human,primary,NW.HCA.TO,101.47383031292294,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2002,15953072951978.1,True,Human Capital (const US$),Human,primary,NW.HCA.TO,102.63496515244898,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2003,16230524302168.7,True,Human Capital (const US$),Human,primary,NW.HCA.TO,104.4199635501891,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2004,16484294978281.5,True,Human Capital (const US$),Human,primary,NW.HCA.TO,106.05261103935646,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2005,16789971615209.3,True,Human Capital (const US$),Human,primary,NW.HCA.TO,108.01919835914381,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2006,17039361709246.8,True,Human Capital (const US$),Human,primary,NW.HCA.TO,109.62366313454817,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2007,17266798800835.7,True,Human Capital (const US$),Human,primary,NW.HCA.TO,111.08689207105888,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2008,17504359302638.4,True,Human Capital (const US$),Human,primary,NW.HCA.TO,112.61525051946022,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2009,17297258965304.5,True,Human Capital (const US$),Human,primary,NW.HCA.TO,111.28285920091557,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2010,17436263734402.0,True,Human Capital (const US$),Human,primary,NW.HCA.TO,112.17715396627467,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2011,17566514178202.3,True,Human Capital (const US$),Human,primary,NW.HCA.TO,113.01512730224424,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2012,17824921959834.0,True,Human Capital (const US$),Human,primary,NW.HCA.TO,114.67760786274357,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2013,18095698180735.7,True,Human Capital (const US$),Human,primary,NW.HCA.TO,116.41966145204354,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2014,18557410742127.7,True,Human Capital (const US$),Human,primary,NW.HCA.TO,119.39011440437206,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2015,18896802440003.5,True,Human Capital (const US$),Human,primary,NW.HCA.TO,121.57360940808508,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2016,19196347933785.6,True,Human Capital (const US$),Human,primary,NW.HCA.TO,123.5007516839616,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2017,19413025958743.8,True,Human Capital (const US$),Human,primary,NW.HCA.TO,124.89476157834554,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2018,19629900174707.2,True,Human Capital (const US$),Human,primary,NW.HCA.TO,126.29003367826456,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2019,19848029555479.9,True,Human Capital (const US$),Human,primary,NW.HCA.TO,127.69338094945944,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2020,20066489823925.8,True,Human Capital (const US$),Human,primary,NW.HCA.TO,129.09885700455138,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2000,77.7414634146342,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,100.0,False,Years,World Bank – WDI
+2001,77.9926829268293,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,100.32314739285937,False,Years,World Bank – WDI
+2002,78.1439024390244,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,100.5176632992407,False,Years,World Bank – WDI
+2003,78.4463414634146,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,100.9066951120034,False,Years,World Bank – WDI
+2004,78.7463414634146,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,101.2925895714374,False,Years,World Bank – WDI
+2005,79.0487804878049,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,101.68162138420026,False,Years,World Bank – WDI
+2006,79.2487804878049,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,101.93888435715625,False,Years,World Bank – WDI
+2007,79.4487804878049,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,102.19614733011227,False,Years,World Bank – WDI
+2008,79.6,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,102.39066323649362,False,Years,World Bank – WDI
+2009,80.0512195121951,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,102.97107360230899,False,Years,World Bank – WDI
+2010,80.4024390243902,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,103.42285248164636,False,Years,World Bank – WDI
+2011,80.9512195121951,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.12875698061106,False,Years,World Bank – WDI
+2012,80.9048780487805,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.0691472673652,False,Years,World Bank – WDI
+2013,81.0048780487805,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.1977787538432,False,Years,World Bank – WDI
+2014,81.3048780487805,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.58367321327722,False,Years,World Bank – WDI
+2015,80.9560975609756,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.13503168726854,False,Years,World Bank – WDI
+2016,81.1560975609756,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.39229466022455,False,Years,World Bank – WDI
+2017,81.2560975609756,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.52092614670256,False,Years,World Bank – WDI
+2018,81.2560975609756,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.52092614670256,False,Years,World Bank – WDI
+2019,81.3691219512195,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.66631109995599,False,Years,World Bank – WDI
+2020,80.331756097561,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,103.33193198217981,False,Years,World Bank – WDI
+2021,80.6473170731707,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,103.73784275585105,False,Years,World Bank – WDI
+2022,81.0112195121951,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.20593587249786,False,Years,World Bank – WDI
+2023,81.2380975609756,True,Life expectancy at birth (years),Human,support,SP.DYN.LE00.IN,104.49777247913651,False,Years,World Bank – WDI
+2000,22050.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,100.0,False,Number of applications,World Bank – WDI
+2001,21423.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,97.156462585034,False,Number of applications,World Bank – WDI
+2002,20624.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,93.53287981859411,False,Number of applications,World Bank – WDI
+2003,20426.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,92.63492063492063,False,Number of applications,World Bank – WDI
+2004,19178.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,86.9750566893424,False,Number of applications,World Bank – WDI
+2005,17833.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,80.87528344671202,False,Number of applications,World Bank – WDI
+2006,17484.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,79.29251700680273,False,Number of applications,World Bank – WDI
+2007,17375.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,78.79818594104309,False,Number of applications,World Bank – WDI
+2008,16523.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,74.93424036281179,False,Number of applications,World Bank – WDI
+2009,15985.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,72.49433106575964,False,Number of applications,World Bank – WDI
+2010,15490.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,70.24943310657596,False,Number of applications,World Bank – WDI
+2011,15343.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,69.58276643990929,False,Number of applications,World Bank – WDI
+2012,15370.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,69.70521541950113,False,Number of applications,World Bank – WDI
+2013,14972.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,67.90022675736962,False,Number of applications,World Bank – WDI
+2014,15196.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,68.91609977324264,False,Number of applications,World Bank – WDI
+2015,14867.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,67.42403628117913,False,Number of applications,World Bank – WDI
+2016,13876.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,62.929705215419496,False,Number of applications,World Bank – WDI
+2017,13301.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,60.321995464852606,False,Number of applications,World Bank – WDI
+2018,12865.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,58.34467120181406,False,Number of applications,World Bank – WDI
+2019,12061.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,54.6984126984127,False,Number of applications,World Bank – WDI
+2020,11990.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,54.37641723356009,False,Number of applications,World Bank – WDI
+2021,11592.0,True,Patent Applications (resident),Knowledge,support,IP.PAT.RESD,52.57142857142857,False,Number of applications,World Bank – WDI
+2000,4825240236821.56,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,100.0,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2001,4940287805338.76,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,102.38428685144562,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2002,5063909407035.41,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,104.94626502515996,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2003,5191193673513.33,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,107.58414957040208,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2004,5320114749466.12,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,110.25595593910865,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2005,5463239885929.22,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,113.22213232491649,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2006,5613520492543.33,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,116.33660122674057,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2007,5773340014356.1,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,119.64875801000665,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2008,5907362920351.59,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,122.4262965245195,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2009,5986863343432.19,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,124.07389165302587,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2010,6077235673161.76,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,125.94680005331513,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2011,6159423979074.87,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,127.65009982450432,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2012,6242772528330.27,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,129.37744489261854,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2013,6335557841695.85,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,131.30036082657622,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2014,6451996207582.54,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,133.7134710588533,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2015,6584614544483.24,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,136.46190078238675,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2016,6727375693290.7,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,139.42053375817198,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2017,6871157622381.69,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,142.40032174870117,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2018,7006449920632.87,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,145.20416760115756,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2019,7140219765920.02,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,147.97646159527517,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2020,7234208790350.24,True,Produced Capital (const US$),Manufactured,primary,NW.PCA.TO,149.92432366674237,False,"US$ (constant, trillions)",World Bank – Wealth Accounts
+2000,1.60963,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,100.0,False,% of GDP,World Bank – WDI
+2001,1.59545,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,99.1190522045439,False,% of GDP,World Bank – WDI
+2002,1.61383,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,100.26092953038899,False,% of GDP,World Bank – WDI
+2003,1.58131,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,98.24058945223437,False,% of GDP,World Bank – WDI
+2004,1.53089,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,95.10819256599345,False,% of GDP,World Bank – WDI
+2005,1.55004,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,96.29790697240982,False,% of GDP,World Bank – WDI
+2006,1.57626,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,97.92685275498097,False,% of GDP,World Bank – WDI
+2007,1.6183,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,100.53863310201724,False,% of GDP,World Bank – WDI
+2008,1.60901,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,99.9614818312283,False,% of GDP,World Bank – WDI
+2009,1.66991,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,103.7449600218684,False,% of GDP,World Bank – WDI
+2010,1.63886,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,101.81594527934992,False,% of GDP,World Bank – WDI
+2011,1.64681,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,102.30984760472906,False,% of GDP,World Bank – WDI
+2012,1.57587,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,97.90262358430199,False,% of GDP,World Bank – WDI
+2013,1.62096,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,100.7038884712636,False,% of GDP,World Bank – WDI
+2014,2.26488,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,140.70811304461273,False,% of GDP,World Bank – WDI
+2015,2.27566,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,141.37783217261108,False,% of GDP,World Bank – WDI
+2016,2.32052,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,144.16480806148,False,% of GDP,World Bank – WDI
+2017,2.32602,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,144.5065014941322,False,% of GDP,World Bank – WDI
+2018,2.71124,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,168.438709517094,False,% of GDP,World Bank – WDI
+2019,2.6708,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,165.92633089592016,False,% of GDP,World Bank – WDI
+2020,2.93883,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,182.57798376024303,False,% of GDP,World Bank – WDI
+2021,2.89711,True,R&D Expenditure (% of GDP),Knowledge,primary,GB.XPD.RSDV.GD.ZS,179.98608375837927,False,% of GDP,World Bank – WDI
+2000,1.323269844,True,Voice & Accountability (estimate),Social,primary,VA.EST,100.0,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2001,1.3033462165,False,Voice & Accountability (estimate),Social,primary,VA.EST,98.49436397343005,True,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2002,1.283422589,True,Voice & Accountability (estimate),Social,primary,VA.EST,96.9887279468601,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2003,1.333042264,True,Voice & Accountability (estimate),Social,primary,VA.EST,100.73850545633685,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2004,1.597445846,True,Voice & Accountability (estimate),Social,primary,VA.EST,120.71958363165119,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2005,1.443956375,True,Voice & Accountability (estimate),Social,primary,VA.EST,109.1203265567654,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2006,1.378773689,True,Voice & Accountability (estimate),Social,primary,VA.EST,104.19444645033413,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2007,1.335596442,True,Voice & Accountability (estimate),Social,primary,VA.EST,100.931525648823,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2008,1.321022868,True,Voice & Accountability (estimate),Social,primary,VA.EST,99.83019517824061,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2009,1.3033005,True,Voice & Accountability (estimate),Social,primary,VA.EST,98.49090916032392,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2010,1.289993882,True,Voice & Accountability (estimate),Social,primary,VA.EST,97.48532303136201,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2011,1.29741168,True,Voice & Accountability (estimate),Social,primary,VA.EST,98.04588881721695,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2012,1.339132547,True,Voice & Accountability (estimate),Social,primary,VA.EST,101.19875043415558,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2013,1.328984618,True,Voice & Accountability (estimate),Social,primary,VA.EST,100.43186762140104,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2014,1.275757551,True,Voice & Accountability (estimate),Social,primary,VA.EST,96.4094781411795,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2015,1.297944307,True,Voice & Accountability (estimate),Social,primary,VA.EST,98.08613964001134,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2016,1.295706034,True,Voice & Accountability (estimate),Social,primary,VA.EST,97.91699250723649,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2017,1.364297867,True,Voice & Accountability (estimate),Social,primary,VA.EST,103.10050313517158,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2018,1.381709337,True,Voice & Accountability (estimate),Social,primary,VA.EST,104.41629447425088,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2019,1.263957739,True,Voice & Accountability (estimate),Social,primary,VA.EST,95.51776190858318,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2020,1.231570482,True,Voice & Accountability (estimate),Social,primary,VA.EST,93.07024471117624,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2021,1.264621735,True,Voice & Accountability (estimate),Social,primary,VA.EST,95.56794033613602,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2022,1.258541107,True,Voice & Accountability (estimate),Social,primary,VA.EST,95.10842499030002,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2023,1.261623979,True,Voice & Accountability (estimate),Social,primary,VA.EST,95.34139878729073,False,Index (−2.5 to 2.5),Worldwide Governance Indicators
+2024,1.261623979,False,Voice & Accountability (estimate),Social,primary,VA.EST,95.34139878729073,True,Index (−2.5 to 2.5),Worldwide Governance Indicators
