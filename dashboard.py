@@ -949,7 +949,12 @@ for i, cap in enumerate(cap_names):
 
 st.subheader("Decoupling view: GDP per capita vs natural capital")
 
-if not gdp_df.empty and HAS_NAT_STOCK:
+if gdp_df.empty:
+    st.info(
+        "GDP per capita data are not present in the prebaked dataset. "
+        "Add Code=NY.GDP.PCAP.KD to data/prebaked_worldbank.csv to enable this view."
+    )
+elif HAS_NAT_STOCK:
     # Monetised natural capital stock is available (NOT the case for UK in current data,
     # but this logic is included for completeness and future generalisation).
     nat = data_idx[
@@ -1023,8 +1028,8 @@ stagnates or declines.
             "a decoupling chart cannot be computed."
         )
 
-elif not gdp_df.empty and not HAS_NAT_STOCK:
-    # This is the actual case for the UK in the current API data.
+else:
+    # This is the actual case for the UK in the current dataset.
     st.info(
         "A monetised **natural capital stock** series from the World Bank Wealth Accounts "
         "is not available for the UK in the current dataset. As a result, a formal GDP–"
@@ -1033,8 +1038,6 @@ elif not gdp_df.empty and not HAS_NAT_STOCK:
         "per capita) should be used to infer whether economic growth appears to be "
         "associated with environmental pressure or decoupling."
     )
-else:
-    st.info("GDP per capita data are not available from the World Bank API.")
 
 
 # =============================================================================
