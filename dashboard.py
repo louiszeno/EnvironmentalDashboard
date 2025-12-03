@@ -42,6 +42,7 @@ st.set_page_config(
 # ----------------- GLOBAL CONSTANTS -----------------
 COUNTRY = "GBR"          # ISO3 code for the United Kingdom
 MIN_YEAR = 2000          # Base year for analysis and indexing
+PLOTLY_TEMPLATE = "plotly_dark"  # Keep chart styling aligned with dark theme
 
 
 # =============================================================================
@@ -858,6 +859,7 @@ else:
         values="Value_trillions",
         names="Capital",
         title="Composition of capital stocks (trillions US$)",
+        template=PLOTLY_TEMPLATE,
     )
     fig_comp_pie.update_traces(texttemplate="%{percent:.1%}")
     st.plotly_chart(fig_comp_pie, width="stretch")
@@ -868,6 +870,7 @@ else:
         y="Value_trillions",
         title="Capital stock levels (trillions US$)",
         text_auto=".2f",
+        template=PLOTLY_TEMPLATE,
     )
     fig_comp_bar.update_layout(yaxis_title="Trillions of US$ (constant)")
     fig_comp_bar.update_yaxes(tickformat=".2f")
@@ -924,7 +927,7 @@ line_kwargs = {
     "x": "Year",
     "y": y_col,
     "color": "Indicator",
-    "template": "plotly_white",
+    "template": PLOTLY_TEMPLATE,
 }
 
 if highlight_imputed:
@@ -970,7 +973,7 @@ for i, cap in enumerate(cap_names):
             x="Year",
             y="Index",
             color="Indicator",
-            template="plotly_white",
+            template=PLOTLY_TEMPLATE,
         )
         fig_cap.update_layout(
             showlegend=True,
@@ -1029,7 +1032,7 @@ if not gdp_df.empty and HAS_NAT_STOCK:
                     x="Year",
                     y="Index",
                     color="Series",
-                    template="plotly_white",
+                    template=PLOTLY_TEMPLATE,
                 )
                 fig_dec.update_layout(
                     yaxis_title="Index (100 = first available year)",
