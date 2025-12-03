@@ -467,6 +467,26 @@ def load_gdp_per_capita():
 
     This is indexed to 100 at the first available year.
     """
+    # Prefer prebaked GDP if present in the same CSV to avoid API calls.
+    if PREBAKED_PATH.exists():
+        try:
+            df_pre = pd.read_csv(PREBAKED_PATH)
+            df_gdp = df_pre[df_pre["Code"] == "NY.GDP.PCAP.KD"][
+                ["Year", "Value"]
+            ].copy()
+            if not df_gdp.empty:
+                df_gdp = df_gdp.sort_values("Year")
+                base = df_gdp["Value"].iloc[0]
+                df_gdp["GDP_Index"] = (df_gdp["Value"] / base) * 100
+                if LOG_LOAD:
+                    print(
+                        f\"[load_gdp_per_capita] used prebaked GDP with {len(df_gdp)} rows\"
+                    )
+                return df_gdp
+        except Exception as exc:
+            if LOG_LOAD:
+                print(f\"[load_gdp_per_capita] failed to read prebaked GDP: {exc}\")
+
     df = wb_get_series(COUNTRY, "NY.GDP.PCAP.KD", MIN_YEAR, datetime.now().year)
     if df.empty:
         return pd.DataFrame()
