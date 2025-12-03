@@ -956,8 +956,7 @@ if gdp_df.empty:
         "Add Code=NY.GDP.PCAP.KD to data/prebaked_worldbank.csv to enable this view."
     )
 elif HAS_NAT_STOCK:
-    # Monetised natural capital stock is available (NOT the case for UK in current data,
-    # but this logic is included for completeness and future generalisation).
+    # Monetised natural capital stock available (not the UK case, but kept for completeness).
     nat = data_idx[
         (data_idx["Capital"] == "Natural")
         & (data_idx["Indicator"] == "Natural Capital (const US$)")
@@ -1028,17 +1027,65 @@ stagnates or declines.
             "GDP per capita and natural capital stock have disjoint coverage periods; "
             "a decoupling chart cannot be computed."
         )
-
 else:
-    # This is the actual case for the UK in the current dataset.
-    st.info(
-        "A monetised **natural capital stock** series from the World Bank Wealth Accounts "
-        "is not available for the UK in the current dataset. As a result, a formal GDP–"
-        "natural capital decoupling chart cannot be shown.\n\n"
-        "Instead, the **Natural capital profiles above** (forest area and CO₂ emissions "
-        "per capita) should be used to infer whether economic growth appears to be "
-        "associated with environmental pressure or decoupling."
-    )
+    # Monetised natural capital stock is unavailable; use proxy natural indicators.
+    nat_proxy = data_idx[
+        (data_idx["Capital"] == "Natural")
+        & (data_idx["Indicator"] != "Natural Capital (const US$)")
+    ][["Year", "Indicator", "Index"]].copy()
+
+    if nat_proxy.empty:
+        st.info(
+            "Natural capital proxy indicators are not available in the selected range, "
+            "so a GDP–environment comparison cannot be shown."
+        )
+    else:
+        year_min_sel, year_max_sel = yr_range
+        nat_proxy = nat_proxy[
+            (nat_proxy["Year"] >= year_min_sel) & (nat_proxy["Year"] <= year_max_sel)
+        ]
+
+        gdp_dec = gdp_df.copy()
+        gdp_dec["Year"] = gdp_dec["Year"].astype(int)
+        gdp_dec = gdp_dec[
+            (gdp_dec["Year"] >= year_min_sel) & (gdp_dec["Year"] <= year_max_sel)
+        ]
+        if gdp_dec.empty:
+            st.info(
+                "No GDP rows within the selected year range; adjust the slider to see "
+                "the GDP–environment comparison."
+            )
+        else:
+            gdp_dec = gdp_dec.rename(columns={"GDP_Index": "Index"})
+            gdp_dec["Indicator"] = "GDP per capita (constant prices)"
+
+            dec_alt = pd.concat(
+                [gdp_dec[["Year", "Indicator", "Index"]], nat_proxy],
+                ignore_index=True,
+            )
+            dec_alt = dec_alt.sort_values(["Indicator", "Year"])
+
+            fig_dec_alt = px.line(
+                dec_alt,
+                x="Year",
+                y="Index",
+                color="Indicator",
+                template=PLOTLY_TEMPLATE,
+            )
+            fig_dec_alt.update_layout(
+                yaxis_title="Index (100 = first available year per series)",
+            )
+            fig_dec_alt.update_yaxes(tickformat=".2f")
+            st.plotly_chart(fig_dec_alt, width="stretch")
+
+            st.markdown(
+                """
+With no monetised natural capital stock for the UK, this chart compares **GDP per capita**
+to available natural proxies (forest area % and CO₂ per capita). Rising GDP alongside stable
+or improving natural proxies suggests decoupling; rising GDP with worsening proxies suggests
+pressures on the environment.
+                """
+            )
 
 
 # =============================================================================
