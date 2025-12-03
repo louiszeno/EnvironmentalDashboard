@@ -7,9 +7,6 @@ __pycache__/
 env/
 venv/
 
-# Streamlit
-.streamlit/
-
 # macOS / IDE
 .DS_Store
 .idea/
