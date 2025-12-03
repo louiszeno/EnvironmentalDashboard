@@ -30,8 +30,7 @@ import pandas as pd
 import plotly.express as px
 import requests
 import time
-from datetime import datetime, timedelta
-from pathlib import Path
+from datetime import datetime
 
 # ----------------- PAGE CONFIG -----------------
 st.set_page_config(
@@ -44,9 +43,7 @@ st.set_page_config(
 COUNTRY = "GBR"          # ISO3 code for the United Kingdom
 MIN_YEAR = 2000          # Base year for analysis and indexing
 PLOTLY_TEMPLATE = "plotly_dark"  # Keep chart styling aligned with dark theme
-CACHE_DIR = Path(".cache")
-DATA_CACHE_PATH = CACHE_DIR / "indicator_cache.pkl"
-CACHE_MAX_AGE = timedelta(days=1)
+LOG_LOAD = True          # Print fetch timing to console for diagnostics
 
 
 # =============================================================================
@@ -238,27 +235,12 @@ def load_all_data():
     meta : DataFrame
         Indicator metadata (Indicator, Capital, Code, Unit, Source)
     """
-    # Use a lightweight disk cache to avoid re-hitting APIs more than once per day.
-    # Shared across users on the same server process.
-    if DATA_CACHE_PATH.exists():
-        age = datetime.now() - datetime.fromtimestamp(DATA_CACHE_PATH.stat().st_mtime)
-        if age <= CACHE_MAX_AGE:
-            try:
-                cached = pd.read_pickle(DATA_CACHE_PATH)
-                if (
-                    isinstance(cached, dict)
-                    and "data_raw" in cached
-                    and "meta" in cached
-                ):
-                    return cached["data_raw"], cached["meta"]
-            except Exception:
-                pass
-
     start = MIN_YEAR
     end = datetime.now().year
 
     frames = []
     meta_rows = []
+    t0_all = time.perf_counter()
 
     # A. World Bank indicators (except Voice & Accountability)
     for cap, spec in CAPITALS.items():
@@ -272,7 +254,13 @@ def load_all_data():
             if cap == "Social" and ind["code"] == "VA.EST":
                 continue
 
+            t0 = time.perf_counter()
             df = wb_get_series(COUNTRY, ind["code"], start, end)
+            if LOG_LOAD:
+                print(
+                    f"[load_all_data] {ind['code']} ({ind['name']}) "
+                    f"fetched {len(df)} rows in {time.perf_counter() - t0:.2f}s"
+                )
             if df.empty:
                 continue
 
@@ -295,7 +283,13 @@ def load_all_data():
 
     # B. Voice & Accountability (Social capital primary) from CSV
     try:
+        t0_va = time.perf_counter()
         va = pd.read_csv("voice_accountability_uk.csv")
+        if LOG_LOAD:
+            print(
+                f"[load_all_data] voice_accountability_uk.csv loaded "
+                f"{len(va)} rows in {time.perf_counter() - t0_va:.2f}s"
+            )
     except FileNotFoundError:
         st.error(
             "voice_accountability_uk.csv not found. "
@@ -329,6 +323,7 @@ def load_all_data():
     # C. ONS Net Capital Stock for manufactured capital
     try:
         ons_url = "https://api.ons.gov.uk/timeseries/MJU5/dataset/CAPSTK/data"
+        t0_ons = time.perf_counter()
         resp = requests.get(
             ons_url,
             headers={"User-Agent": "UK-Inclusive-Wealth-Dashboard"},
@@ -358,6 +353,11 @@ def load_all_data():
                 "Source": "ONS Capital Stock dataset (series MJU5)",
             }
         )
+        if LOG_LOAD:
+            print(
+                "[load_all_data] ONS MJU5 fetched "
+                f"{len(df_ons)} rows in {time.perf_counter() - t0_ons:.2f}s"
+            )
     except Exception:
         # This failure is non-fatal; we can still run without the ONS series.
         pass
@@ -368,12 +368,11 @@ def load_all_data():
     data_raw = pd.concat(frames, ignore_index=True)
     meta = pd.DataFrame(meta_rows).drop_duplicates()
 
-    try:
-        CACHE_DIR.mkdir(exist_ok=True)
-        pd.to_pickle({"data_raw": data_raw, "meta": meta}, DATA_CACHE_PATH)
-    except Exception:
-        # Cache failures should not break the app.
-        pass
+    if LOG_LOAD:
+        print(
+            f"[load_all_data] completed with {len(data_raw)} rows "
+            f"in {time.perf_counter() - t0_all:.2f}s"
+        )
 
     return data_raw, meta
 
@@ -443,9 +442,7 @@ def index_series(df: pd.DataFrame) -> pd.DataFrame:
             g[col] = g[col].ffill().bfill()
 
         # Ensure Observed is plain bool with no NA
-        g["Observed"] = (
-            g["Observed"].astype("boolean").fillna(False).astype(bool)
-        )
+        g["Observed"] = g["Observed"].fillna(False).astype(bool)
 
         # Interpolate values
         g["Value"] = g["Value"].interpolate(method="linear", limit_direction="both")
@@ -929,9 +926,7 @@ chart_df["Value_display"] = chart_df.apply(_scale_for_display, axis=1)
 
 # Ensure Imputed is clean bool (defensive, though index_series already did this)
 if "Imputed" in chart_df.columns:
-    chart_df["Imputed"] = (
-        chart_df["Imputed"].astype("boolean").fillna(False).astype(bool)
-    )
+    chart_df["Imputed"] = chart_df["Imputed"].fillna(False).astype(bool)
 
 if view_mode.startswith("Indexed"):
     y_col = "Index"
