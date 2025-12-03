@@ -199,9 +199,20 @@ def wb_get_series(country: str, indicator: str, start: int, end: int,
 
     for attempt in range(retries):
         try:
+            t_req = time.perf_counter()
             r = requests.get(url, timeout=15)
+            if LOG_LOAD:
+                print(
+                    f"[wb_get_series] {indicator} attempt {attempt+1}/{retries} "
+                    f"status={r.status_code} in {time.perf_counter()-t_req:.2f}s"
+                )
             js = r.json()
-        except Exception:
+        except Exception as exc:
+            if LOG_LOAD:
+                print(
+                    f"[wb_get_series] {indicator} attempt {attempt+1}/{retries} "
+                    f"failed: {exc}"
+                )
             time.sleep(pause * (attempt + 1))
             continue
 
@@ -213,6 +224,12 @@ def wb_get_series(country: str, indicator: str, start: int, end: int,
                         {"Year": int(d["date"]), "Value": float(d["value"])}
                     )
             return pd.DataFrame(rows)
+        else:
+            if LOG_LOAD:
+                print(
+                    f"[wb_get_series] {indicator} unexpected payload type: "
+                    f"{type(js).__name__}"
+                )
 
         time.sleep(pause * (attempt + 1))
 
