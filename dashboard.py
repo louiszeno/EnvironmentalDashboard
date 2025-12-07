@@ -78,24 +78,19 @@ Each entry specifies:
 CAPITALS = {
     "Natural": {
         "primary": {
-            "code": "NW.NCA.TO",
-            "name": "Natural Capital (const US$)",
-            "unit": "US$ (constant, trillions)",
-            "source": "World Bank – Wealth Accounts",
-        },
-        "support": {
             "code": "AG.LND.FRST.ZS",
             "name": "Forest area (% of land area)",
             "unit": "% of land area",
             "source": "World Bank – WDI",
         },
-        "support2": {
+        "support": {
             "code": "EN.ATM.CO2E.PC",
             "name": "CO₂ emissions (metric tons per capita)",
             "unit": "Metric tons per capita",
             "source": "World Bank – WDI",
         },
     },
+
     "Human": {
         "primary": {
             "code": "NW.HCA.TO",
@@ -519,16 +514,14 @@ The discounted value of skills, health, and productivity embodied in individuals
 ---
 
 ### 3. Natural Capital
-Environmental assets that provide ecosystem services and resources.
+Environmental assets that underpin ecosystem services and long-run environmental stability.
 
 **Indicators used:**
-- **Natural Capital (constant US$)** *(not available for UK in this dataset)*  
-- **Forest area (% of land area)** — ecosystem extent proxy.  
-- **CO₂ emissions (tons per capita)** — environmental pressure indicator.
+- **Forest area (% of land area)** — a proxy for ecosystem extent and land-cover health 
+- **CO₂ emissions (tons per capita)** — a pressure indicator reflecting the carbon intensity UK economic activity.
 
 Because the monetised natural capital stock series is missing for the UK in the
-Wealth Accounts API, **natural capital is characterised using forest extent and
-emissions rather than a monetary stock**.
+World Bank Wealth accounts API, **natural capital is characterised using physical and environmental indicators rather than a monetary stock**.
 
 ---
 
@@ -559,6 +552,14 @@ Both are measured on a **−2.5 to +2.5** governance scale.
 - Focusing solely on GDP can hide **depletion of natural or social capital**.
 - This dashboard allows us to see whether the UK is accumulating or eroding
   each capital, and whether growth is **weakly or strongly sustainable**.
+  
+---
+
+### Data Sources
+
+- All data used in the dashboard are sourced from the World Bank World Development Indicators (WDI), World Bank Wealth Accounts (CWON), Worldwide Governance Indicators (WGI), and the UK Office for National Statistics (ONS).”
+     
+---
         """
     )
 
@@ -717,7 +718,7 @@ st.subheader("Latest snapshot – primary indicator for each capital")
 PRIMARY_MAP = {
     "Manufactured": "Produced Capital (const US$)",
     "Human": "Human Capital (const US$)",
-    "Natural": "Natural Capital (const US$)",
+    "Natural": "Forest area (% of land area)",
     "Knowledge": "R&D Expenditure (% of GDP)",
     "Social": VA_INDICATOR_NAME,
 }
