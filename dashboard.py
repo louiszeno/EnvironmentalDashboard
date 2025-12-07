@@ -557,7 +557,7 @@ Both are measured on a **−2.5 to +2.5** governance scale.
 
 ### Data Sources
 
-- All data used in the dashboard are sourced from the World Bank World Development Indicators (WDI), World Bank Wealth Accounts (CWON), Worldwide Governance Indicators (WGI), and the UK Office for National Statistics (ONS).”
+- All data used in the dashboard are sourced from the World Bank World Development Indicators (WDI), World Bank Wealth Accounts (CWON), Worldwide Governance Indicators (WGI), the UK Office for National Statistics (ONS), and Our World in Data (OWD).”
      
 ---
         """
