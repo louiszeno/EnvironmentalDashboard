@@ -833,6 +833,7 @@ else:
             comp,
             x="Capital",
             y="Value_trillions",
+            color="Capital",
             text="Label",
             title="Capital stocks: levels and shares (trillions US$)",
             template=PLOTLY_TEMPLATE,
