@@ -856,15 +856,13 @@ else:
         fig_comp.update_yaxes(tickformat=".2f")
         fig_comp.update_traces(textposition="outside")
 
-        st.plotly_chart(fig_comp, use_container_width=True)
+        st.plotly_chart(fig_comp, width="stretch")
 
         st.caption(
             "Bar height shows the absolute stock (trillions of constant US$). "
             "Labels show both the level and the percentage share of total "
             "Wealth Accounts capital."
         )
-
-
 
 # =============================================================================
 # 11. TRAJECTORIES: INDEXED VS ABSOLUTE
