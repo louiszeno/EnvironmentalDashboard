@@ -779,7 +779,7 @@ with st.expander("Supporting indicators – latest values by series"):
         ["Indicator", "Capital", "Year", "Value"]
     ].copy()
     support_latest["Value"] = support_latest["Value"].apply(fmt)
-    st.dataframe(support_latest, width="stretch")
+    st.dataframe(support_latest, width="stretch", hide_index=True)
 
 
 # =============================================================================
