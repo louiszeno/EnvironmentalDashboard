@@ -761,6 +761,8 @@ if kpi_primary:
             value=fmt(value),
             help=help_text,
         )
+
+
 else:
     st.info(
         "No primary capital stock data available for the selected filters. "
@@ -778,7 +780,17 @@ with st.expander("Supporting indicators – latest values by series"):
     support_latest = latest_all[~latest_all["Indicator"].isin(PRIMARY_MAP.values())][
         ["Indicator", "Capital", "Year", "Value"]
     ].copy()
-    support_latest["Value"] = support_latest["Value"].apply(fmt)
+
+
+    def fmt_patents(row):
+        if row["Indicator"] == "Patent Applications (resident)":
+            return f"{int(row['Value']):,}"  # whole numbers with commas
+        else:
+            return fmt(row["Value"])
+
+
+    support_latest["Value"] = support_latest.apply(fmt_patents, axis=1)
+
     st.dataframe(support_latest, width="stretch", hide_index=True)
 
 
