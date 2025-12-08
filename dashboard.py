@@ -783,16 +783,15 @@ with st.expander("Supporting indicators – latest values by series"):
 
 
 # =============================================================================
-# 10. WEALTH COMPOSITION (PIE + BAR, WHERE POSSIBLE)
+# 10. WEALTH COMPOSITION – SINGLE BAR CHART
 # =============================================================================
 
 st.subheader("Wealth composition (latest year – Wealth Accounts stocks)")
 
-# Wealth stocks expected from the Wealth Accounts
 wealth_stock_indicators = [
     "Produced Capital (const US$)",
     "Human Capital (const US$)",
-    "Natural Capital (const US$)",
+    "Natural Capital (const US$)",  # will be missing for UK, that's fine
 ]
 
 latest_wealth = (
@@ -807,34 +806,51 @@ comp = latest_wealth.copy()
 if comp.empty:
     st.info(
         "Wealth Accounts capital stock series (produced, human, natural) are not all "
-        "available for the UK / selected window. A full wealth composition chart cannot "
-        "be shown. This particularly reflects the absence of a monetised natural "
-        "capital stock series in the API."
+        "available for the UK / selected window. For the UK case, this is mainly due "
+        "to the absence of a monetised natural capital stock series."
     )
 else:
+    # Scale to trillions and compute shares
     comp["Value_trillions"] = comp["Value"] / 1e12
+    total = comp["Value_trillions"].sum()
 
-    fig_comp_pie = px.pie(
-        comp,
-        values="Value_trillions",
-        names="Capital",
-        title="Composition of capital stocks (trillions US$)",
-        template=PLOTLY_TEMPLATE,
-    )
-    fig_comp_pie.update_traces(texttemplate="%{percent:.1%}")
-    st.plotly_chart(fig_comp_pie, width="stretch")
+    # Defensive: avoid division by zero
+    if total == 0:
+        st.info(
+            "Wealth Account stock values are zero in the selected window, so a "
+            "composition chart cannot be shown."
+        )
+    else:
+        comp["Share_pct"] = comp["Value_trillions"] / total * 100
 
-    fig_comp_bar = px.bar(
-        comp,
-        x="Capital",
-        y="Value_trillions",
-        title="Capital stock levels (trillions US$)",
-        text_auto=".2f",
-        template=PLOTLY_TEMPLATE,
-    )
-    fig_comp_bar.update_layout(yaxis_title="Trillions of US$ (constant)")
-    fig_comp_bar.update_yaxes(tickformat=".2f")
-    st.plotly_chart(fig_comp_bar, width="stretch")
+        # Text label combining absolute and percentage
+        comp["Label"] = comp.apply(
+            lambda r: f"{r['Value_trillions']:.2f} ( {r['Share_pct']:.1f}% )",
+            axis=1,
+        )
+
+        fig_comp = px.bar(
+            comp,
+            x="Capital",
+            y="Value_trillions",
+            text="Label",
+            title="Capital stocks: levels and shares (trillions US$)",
+            template=PLOTLY_TEMPLATE,
+        )
+        fig_comp.update_layout(
+            yaxis_title="Trillions of US$ (constant)",
+        )
+        fig_comp.update_yaxes(tickformat=".2f")
+        fig_comp.update_traces(textposition="outside")
+
+        st.plotly_chart(fig_comp, use_container_width=True)
+
+        st.caption(
+            "Bar height shows the absolute stock (trillions of constant US$). "
+            "Labels show both the level and the percentage share of total "
+            "Wealth Accounts capital."
+        )
+
 
 
 # =============================================================================
